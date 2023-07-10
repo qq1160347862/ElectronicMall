@@ -19,6 +19,16 @@ export default{
 								imgUrl:"../../../static/banner/banner1.png",
 								price:99.00,
 								num:1,
+								coupon:{
+									type:'discount',
+									name:'生鲜折扣券',
+									num:0.55,
+									status:'可使用',
+									condition:'无门槛使用',
+									conditionNum:0,
+									validStart:'2019.11.18',
+									validEnd:'2023.12.18'
+								},
 							},
 							{
 								name:"腾讯极光盒子5智能网络电视机顶盒6K千兆网络机顶盒4K高分辨率",
@@ -26,6 +36,16 @@ export default{
 								imgUrl:"../../../static/banner/banner1.png",
 								price:56.00,
 								num:5,
+								coupon:{
+									type:'discount',
+									name:'生鲜折扣券',
+									num:0.55,
+									status:'可使用',
+									condition:'无门槛使用',
+									conditionNum:0,
+									validStart:'2019.11.18',
+									validEnd:'2023.12.18'
+								}
 							}
 						],				
 						
@@ -43,6 +63,16 @@ export default{
 								imgUrl:"../../../static/banner/banner1.png",
 								price:99.00,
 								num:2,
+								coupon:{
+									type:'discount',
+									name:'生鲜折扣券',
+									num:0.55,
+									status:'可使用',
+									condition:'无门槛使用',
+									conditionNum:0,
+									validStart:'2019.11.18',
+									validEnd:'2023.12.18'
+								}
 							},
 							{
 								name:"腾讯极光盒子5智能网络电视机顶盒6K千兆网络机顶盒4K高分辨率",
@@ -50,6 +80,16 @@ export default{
 								imgUrl:"../../../static/banner/banner1.png",
 								price:56.00,
 								num:5,
+								coupon:{
+									type:'discount',
+									name:'生鲜折扣券',
+									num:0.55,
+									status:'可使用',
+									condition:'无门槛使用',
+									conditionNum:0,
+									validStart:'2019.11.18',
+									validEnd:'2023.12.18'
+								}
 							}
 						],				
 						
@@ -67,6 +107,16 @@ export default{
 								imgUrl:"../../../static/banner/banner1.png",
 								price:99.00,
 								num:2,
+								coupon:{
+									type:'discount',
+									name:'生鲜折扣券',
+									num:0.55,
+									status:'可使用',
+									condition:'无门槛使用',
+									conditionNum:0,
+									validStart:'2019.11.18',
+									validEnd:'2023.12.18'
+								}
 							},
 							{
 								name:"腾讯极光盒子5智能网络电视机顶盒6K千兆网络机顶盒4K高分辨率",
@@ -74,6 +124,16 @@ export default{
 								imgUrl:"../../../static/banner/banner1.png",
 								price:56.00,
 								num:5,
+								coupon:{
+									type:'discount',
+									name:'生鲜折扣券',
+									num:0.55,
+									status:'可使用',
+									condition:'无门槛使用',
+									conditionNum:0,
+									validStart:'2019.11.18',
+									validEnd:'2023.12.18'
+								}
 							}
 						],				
 						
@@ -91,6 +151,16 @@ export default{
 								imgUrl:"../../../static/banner/banner1.png",
 								price:99.00,
 								num:2,
+								coupon:{
+									type:'discount',
+									name:'生鲜折扣券',
+									num:0.55,
+									status:'可使用',
+									condition:'无门槛使用',
+									conditionNum:0,
+									validStart:'2019.11.18',
+									validEnd:'2023.12.18'
+								},
 							},
 							{
 								name:"腾讯极光盒子5智能网络电视机顶盒6K千兆网络机顶盒4K高分辨率",
@@ -98,6 +168,16 @@ export default{
 								imgUrl:"../../../static/banner/banner1.png",
 								price:56.00,
 								num:5,
+								coupon:{
+									type:'discount',
+									name:'生鲜折扣券',
+									num:0.55,
+									status:'可使用',
+									condition:'无门槛使用',
+									conditionNum:0,
+									validStart:'2019.11.18',
+									validEnd:'2023.12.18'
+								},
 							}
 						],				
 						
@@ -120,6 +200,16 @@ export default{
 								imgUrl:"../../../static/banner/banner1.png",
 								price:99.00,
 								num:1,
+								coupon:{
+									type:'discount',
+									name:'生鲜折扣券',
+									num:0.55,
+									status:'可使用',
+									condition:'无门槛使用',
+									conditionNum:0,
+									validStart:'2019.11.18',
+									validEnd:'2023.12.18'
+								},
 							},
 							{
 								name:"腾讯极光盒子5智能网络电视机顶盒6K千兆网络机顶盒4K高分辨率",
@@ -127,6 +217,16 @@ export default{
 								imgUrl:"../../../static/banner/banner1.png",
 								price:56.00,
 								num:5,
+								coupon:{
+									type:'discount',
+									name:'生鲜折扣券',
+									num:0.55,
+									status:'可使用',
+									condition:'无门槛使用',
+									conditionNum:0,
+									validStart:'2019.11.18',
+									validEnd:'2023.12.18'
+								},
 							}
 						],				
 						
@@ -149,6 +249,16 @@ export default{
 								imgUrl:"../../../static/banner/banner1.png",
 								price:99.00,
 								num:2,
+								coupon:{
+									type:'discount',
+									name:'生鲜折扣券',
+									num:0.55,
+									status:'可使用',
+									condition:'无门槛使用',
+									conditionNum:0,
+									validStart:'2019.11.18',
+									validEnd:'2023.12.18'
+								},
 							},
 							{
 								name:"腾讯极光盒子5智能网络电视机顶盒6K千兆网络机顶盒4K高分辨率",
@@ -156,6 +266,16 @@ export default{
 								imgUrl:"../../../static/banner/banner1.png",
 								price:56.00,
 								num:5,
+								coupon:{
+									type:'discount',
+									name:'生鲜折扣券',
+									num:0.55,
+									status:'可使用',
+									condition:'无门槛使用',
+									conditionNum:0,
+									validStart:'2019.11.18',
+									validEnd:'2023.12.18'
+								},
 							}
 						],				
 						
@@ -178,6 +298,16 @@ export default{
 								imgUrl:"../../../static/banner/banner1.png",
 								price:99.00,
 								num:2,
+								coupon:{
+									type:'discount',
+									name:'生鲜折扣券',
+									num:0.55,
+									status:'可使用',
+									condition:'无门槛使用',
+									conditionNum:0,
+									validStart:'2019.11.18',
+									validEnd:'2023.12.18'
+								},
 							},
 							{
 								name:"腾讯极光盒子5智能网络电视机顶盒6K千兆网络机顶盒4K高分辨率",
@@ -185,6 +315,16 @@ export default{
 								imgUrl:"../../../static/banner/banner1.png",
 								price:56.00,
 								num:5,
+								coupon:{
+									type:'discount',
+									name:'生鲜折扣券',
+									num:0.55,
+									status:'可使用',
+									condition:'无门槛使用',
+									conditionNum:0,
+									validStart:'2019.11.18',
+									validEnd:'2023.12.18'
+								},
 							}
 						],				
 						
@@ -207,6 +347,16 @@ export default{
 								imgUrl:"../../../static/banner/banner1.png",
 								price:99.00,
 								num:2,
+								coupon:{
+									type:'discount',
+									name:'生鲜折扣券',
+									num:0.55,
+									status:'可使用',
+									condition:'无门槛使用',
+									conditionNum:0,
+									validStart:'2019.11.18',
+									validEnd:'2023.12.18'
+								},
 							},
 							{
 								name:"腾讯极光盒子5智能网络电视机顶盒6K千兆网络机顶盒4K高分辨率",
@@ -214,6 +364,16 @@ export default{
 								imgUrl:"../../../static/banner/banner1.png",
 								price:56.00,
 								num:5,
+								coupon:{
+									type:'discount',
+									name:'生鲜折扣券',
+									num:0.55,
+									status:'可使用',
+									condition:'无门槛使用',
+									conditionNum:0,
+									validStart:'2019.11.18',
+									validEnd:'2023.12.18'
+								},
 							}
 						],				
 						

@@ -6,9 +6,19 @@ export default{
 				name:"腾讯极光盒子5智能网络电视机顶盒6K千兆网络机顶盒4K高分辨率",
 				commodityStyle:"经典白,经典套装",
 				imgUrl:"../../../static/banner/banner1.png",
-				price:99.00,
+				price:100.00,
 				num:1,
 				checked:false,
+				coupon:{
+					type:'discount',
+					name:'生鲜折扣券',
+					num:0.55,
+					status:'可使用',
+					condition:'无门槛使用',
+					conditionNum:0,
+					validStart:'2019.11.18',
+					validEnd:'2023.12.18'
+				}
 			},
 			{
 				id:2,
@@ -18,6 +28,16 @@ export default{
 				price:99.00,
 				num:1,
 				checked:false,
+				coupon:{
+					type:'rebate',
+					name:'生鲜满减券',
+					num:18,
+					status:'可使用',
+					condition:'满100元可用',
+					conditionNum:100,
+					validStart:'2019.11.18',
+					validEnd:'2023.12.18'
+				}
 			},
 			{
 				id:3,
@@ -27,6 +47,16 @@ export default{
 				price:99.00,
 				num:1,
 				checked:false,
+				coupon:{
+					type:'rebate',
+					name:'生鲜满减券',
+					num:18,
+					status:'可使用',
+					condition:'满100元可用',
+					conditionNum:100,
+					validStart:'2019.11.18',
+					validEnd:'2023.12.18'
+				}
 			},
 			{
 				id:4,
@@ -36,6 +66,9 @@ export default{
 				price:99.00,
 				num:1,
 				checked:false,
+				coupon:{
+					
+				}
 			},
 		],
 		selectedList:[],
@@ -51,13 +84,36 @@ export default{
 			let total = {
 				num:0,
 				price:0,
+				discountPrice:0,
 			}
+			let one = true
+			
 			state.list.forEach(item=>{
 				if(item.checked === true){
 					//结算商品项数
 					total.num = state.selectedList.length
-					//合计
-					total.price+=(item.num * item.price)
+					
+					if(!uni.$u.test.isEmpty(item.coupon)){
+						//满减
+						if(item.coupon.type === 'rebate'){
+							//合计
+							total.price+=(item.num * item.price)
+							total.price-=item.coupon.num
+							total.discountPrice+=item.coupon.num
+						}
+						//折扣
+						if((item.coupon.type === 'discount') && one){
+							//合计
+							total.discountPrice = item.price * item.coupon.num
+							total.price = total.price + (item.num * item.price) - total.discountPrice														
+							
+							one = false
+						}
+					}else{
+						//合计
+						total.price+=(item.num * item.price)
+						console.log(123);
+					}
 				}
 			})
 			return total
@@ -75,7 +131,8 @@ export default{
 				}
 			})
 			return res
-		}
+		},
+		
 	},
 	mutations:{
 		//全选

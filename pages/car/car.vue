@@ -40,7 +40,19 @@
 								{{item.name}}																		
 							</view>
 							<view class="car-item-style">{{item.commodityStyle}}</view>
-							<view class="car-item-price">￥{{item.price}}</view>
+							<view class="car-item-price">
+								￥{{item.price}}
+								<text style="font-size: 22rpx; font-weight: lighter;
+								margin-left: 10rpx;color: #000;"
+								v-show="(item.coupon) && (item.coupon.type==='discount')">
+									{{item.coupon.num * 10}}折
+								</text>
+								<text style="font-size: 22rpx; font-weight: lighter;
+								margin-left: 10rpx;color: #000;"
+								v-show="(item.coupon) && (item.coupon.type==='rebate')">
+									满减{{item.coupon.num}}元
+								</text>
+							</view>							
 							<view class="car-item-num">
 								<u-number-box v-model="item.num" 
 								:step="1" :min="1" :max="10"
@@ -65,10 +77,10 @@
 								<text style="font-weight: bold;">
 									总计
 								</text>
-								<text style="color: red; font-weight: bold;">￥{{totalCount.price}}</text>
+								<text style="color: red; font-weight: bold;">￥{{calPrice(totalCount.price)}}</text>
 								<text style="color: #dddddd;">(不含运费)</text>
 							</view>
-							<view><text style="color: #dddddd;">已优惠￥1100</text></view>
+							<view><text style="color: #dddddd;">已优惠￥{{calPrice(totalCount.discountPrice)}}</text></view>
 						</view>
 						<view class="car-foot-btn">
 							<view class="btn">
@@ -139,6 +151,9 @@
 		methods: {
 			...mapActions(['checkAll','delItem']),
 			...mapMutations(['selectItem']),
+			calPrice(price){
+				return Number(price.toString().match(/^\d+(?:\.\d{0,1})?/))
+			},
 			switchEditedState(){
 				this.isEdited = !this.isEdited
 			},
@@ -162,11 +177,15 @@
 				this.delItem()
 				this.isDel = !this.isDel
 			},
-			goConfirmOrder(){
+			goConfirmOrder(){				
 				//有选中的商品才能跳转确认
 				if(this.checkedNum > 0){
+					let obj = {
+						discountPrice:this.calPrice(this.totalCount.discountPrice),
+						list:this.checkedItem,
+					}
 					//将选中的商品信息传给确认订单
-					let objListJson = JSON.stringify(this.checkedItem)
+					let objListJson = JSON.stringify(obj)
 					uni.navigateTo({
 						url:"../confirm-order/confirm-order?data="+objListJson+""
 					})

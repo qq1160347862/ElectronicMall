@@ -57,7 +57,11 @@
 			</view>
 			<view class="confirm-order-commodity-info">
 				<text class="confirm-order-commodity-info-title">商品总额</text>
-				<text class="confirm-order-commodity-info-content" style="font-weight: bold;">￥{{totalPrice}}</text>
+				<text class="confirm-order-commodity-info-content" style="font-weight: bold;">￥{{calPrice(totalPrice)}}</text>
+			</view>
+			<view class="confirm-order-commodity-info">
+				<text class="confirm-order-commodity-info-title">优惠</text>
+				<text class="confirm-order-commodity-info-content" style="font-weight: bold;color: red;">￥{{calPrice(discountPrice)}}</text>
 			</view>
 			<view class="confirm-order-commodity-info">
 				<text class="confirm-order-commodity-info-title">运费</text>
@@ -74,13 +78,13 @@
 				
 			</view>
 			<view class="confirm-order-commodity-info">
-				<text class="confirm-order-commodity-info-content">共{{commodityList.length}}件 小计￥{{discountPrice}}</text>
+				<text class="confirm-order-commodity-info-content">共{{commodityList.length}}件 小计￥{{calPrice(discountedPrice)}}</text>
 			</view>
 		</view>
 		
 		<view class="confirm-order-bottom">
 			<view class="confirm-order-totalPrice">
-				￥{{discountPrice}}
+				￥{{calPrice(discountedPrice)}}
 			</view>
 			<view class="confirm-order-btn" v-show="!addressIsEmpty">
 				<u-button text="提交订单"
@@ -151,12 +155,14 @@
 	export default {
 		onLoad(e) {
 			let objList = JSON.parse(e.data)
-			this.commodityList = objList
+			console.log(objList);
+			this.commodityList = objList.list
 			this.addressIsEmpty = uni.$u.test.isEmpty(this.address)
 			this.commodityList.map(item=>{
 				this.totalPrice += (item.price * item.num)
 			})
-			this.discountPrice = this.totalPrice - this.freight
+			this.discountPrice = objList.discountPrice
+			this.discountedPrice = this.totalPrice - this.freight - this.discountPrice
 		},
 		data() {
 			return {
@@ -166,6 +172,7 @@
 				
 				totalPrice:0,
 				discountPrice:0,
+				discountedPrice:0,
 				freight:0.2,
 				notes:'',
 				
@@ -174,6 +181,9 @@
 			}
 		},
 		methods: {
+			calPrice(price){
+				return Number(price.toString().match(/^\d+(?:\.\d{0,1})?/))
+			},
 			test(){
 				if(!this.addressIsEmpty){
 					console.log(this.addressIsEmpty);
