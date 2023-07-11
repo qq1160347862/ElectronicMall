@@ -5,13 +5,25 @@ export default{
 				name:'全部',
 				list:[
 					{
-						//折扣和地址和备注
+						//地址和下单时间
 										
-						orderId:'12319412313',//订单号
+						orderId:'1',//订单号
 						orderStatus:'待付款',
 						totalPrice:379,
 						freight:0.1,
 						notes:'这里是备注',
+						address:{
+							userName:'俞用湘',
+							tel:'15523990656',
+							area:'贵州省 黔南布衣族苗族自治州 都匀市',
+							detailAddress:'城东烟酒店2楼',
+							tagName:'学校',
+							isDefault:false,
+						},
+						discountPrice:50,
+						discountedPrice:49,
+						orderTIme:'2023-7-11 11:21:45',
+						countdown:24 * 60 * 60 *1000,
 						commodityList:[
 							{
 								name:"腾讯极光盒子5智能网络电视机顶盒6K千兆网络机顶盒4K高分辨率",
@@ -51,11 +63,23 @@ export default{
 						
 					},
 					{
-						orderId:'3412376587234',//订单号
+						orderId:'2',//订单号
 						orderStatus:'待发货',
 						totalPrice:478,
 						freight:0.3,
 						notes:'这里是备注',
+						address:{
+							userName:'俞用湘',
+							tel:'15523990656',
+							area:'贵州省 黔南布衣族苗族自治州 都匀市',
+							detailAddress:'城东烟酒店2楼',
+							tagName:'学校',
+							isDefault:false,
+						},
+						discountPrice:50,
+						discountedPrice:49,
+						orderTIme:'2023-7-11 11:21:45',
+						countdown:24 * 60 * 60 *1000,
 						commodityList:[
 							{
 								name:"腾讯极光盒子5智能网络电视机顶盒6K千兆网络机顶盒4K高分辨率",
@@ -95,11 +119,23 @@ export default{
 						
 					},
 					{
-						orderId:'3412376587234',//订单号
+						orderId:'3',//订单号
 						orderStatus:'待收货',
 						totalPrice:478,
 						freight:0.3,
 						notes:'这里是备注',
+						address:{
+							userName:'俞用湘',
+							tel:'15523990656',
+							area:'贵州省 黔南布衣族苗族自治州 都匀市',
+							detailAddress:'城东烟酒店2楼',
+							tagName:'学校',
+							isDefault:false,
+						},
+						discountPrice:50,
+						discountedPrice:49,
+						orderTIme:'2023-7-11 11:21:45',
+						countdown:24 * 60 * 60 *1000,
 						commodityList:[
 							{
 								name:"腾讯极光盒子5智能网络电视机顶盒6K千兆网络机顶盒4K高分辨率",
@@ -139,11 +175,23 @@ export default{
 						
 					},
 					{
-						orderId:'3412376587234',//订单号
+						orderId:'4',//订单号
 						orderStatus:'待评论',
 						totalPrice:478,
 						freight:0.3,
 						notes:'这里是备注',
+						address:{
+							userName:'俞用湘',
+							tel:'15523990656',
+							area:'贵州省 黔南布衣族苗族自治州 都匀市',
+							detailAddress:'城东烟酒店2楼',
+							tagName:'学校',
+							isDefault:false,
+						},
+						discountPrice:50,
+						discountedPrice:49,
+						orderTIme:'2023-7-11 11:21:45',
+						countdown:24 * 60 * 60 *1000,
 						commodityList:[
 							{
 								name:"腾讯极光盒子5智能网络电视机顶盒6K千兆网络机顶盒4K高分辨率",
@@ -188,11 +236,23 @@ export default{
 				name:'待付款',
 				list:[
 					{
-						orderId:'12319412313',//订单号
+						orderId:'5',//订单号
 						orderStatus:'待付款',
 						totalPrice:379,
 						freight:0.1,
 						notes:'这里是备注',
+						address:{
+							userName:'俞用湘',
+							tel:'15523990656',
+							area:'贵州省 黔南布衣族苗族自治州 都匀市',
+							detailAddress:'城东烟酒店2楼',
+							tagName:'学校',
+							isDefault:false,
+						},
+						discountPrice:50,
+						discountedPrice:49,
+						orderTIme:'2023-7-11 11:21:45',
+						countdown:24 * 60 * 60 *1000,
 						commodityList:[
 							{
 								name:"腾讯极光盒子5智能网络电视机顶盒6K千兆网络机顶盒4K高分辨率",
@@ -237,11 +297,23 @@ export default{
 				name:'待发货',
 				list:[
 					{
-						orderId:'3412376587234',//订单号
+						orderId:'6',//订单号
 						orderStatus:'待发货',
 						totalPrice:478,
 						freight:0.3,
 						notes:'这里是备注',
+						address:{
+							userName:'俞用湘',
+							tel:'15523990656',
+							area:'贵州省 黔南布衣族苗族自治州 都匀市',
+							detailAddress:'城东烟酒店2楼',
+							tagName:'学校',
+							isDefault:false,
+						},
+						discountPrice:50,
+						discountedPrice:49,
+						orderTIme:'2023-7-11 11:21:45',
+						countdown:24 * 60 * 60 *1000,
 						commodityList:[
 							{
 								name:"腾讯极光盒子5智能网络电视机顶盒6K千兆网络机顶盒4K高分辨率",
@@ -286,11 +358,23 @@ export default{
 				name:'待收货',
 				list:[
 					{
-						orderId:'3412376587234',//订单号
+						orderId:'7',//订单号
 						orderStatus:'待收货',
 						totalPrice:478,
 						freight:0.3,
 						notes:'这里是备注',
+						address:{
+							userName:'俞用湘',
+							tel:'15523990656',
+							area:'贵州省 黔南布衣族苗族自治州 都匀市',
+							detailAddress:'城东烟酒店2楼',
+							tagName:'学校',
+							isDefault:false,
+						},
+						discountPrice:50,
+						discountedPrice:49,
+						orderTIme:'2023-7-11 11:21:45',
+						countdown:24 * 60 * 60 *1000,
 						commodityList:[
 							{
 								name:"腾讯极光盒子5智能网络电视机顶盒6K千兆网络机顶盒4K高分辨率",
@@ -335,11 +419,23 @@ export default{
 				name:'待评论',
 				list:[
 					{
-						orderId:'3412376587234',//订单号
+						orderId:'8',//订单号
 						orderStatus:'待评论',
 						totalPrice:478,
 						freight:0.3,
 						notes:'这里是备注',
+						address:{
+							userName:'俞用湘',
+							tel:'15523990656',
+							area:'贵州省 黔南布衣族苗族自治州 都匀市',
+							detailAddress:'城东烟酒店2楼',
+							tagName:'学校',
+							isDefault:false,
+						},
+						discountPrice:50,
+						discountedPrice:49,
+						orderTIme:'2023-7-11 11:21:45',
+						countdown:24 * 60 * 60 *1000,
 						commodityList:[
 							{
 								name:"腾讯极光盒子5智能网络电视机顶盒6K千兆网络机顶盒4K高分辨率",
@@ -389,7 +485,7 @@ export default{
 	mutations:{
 		updateTabIndexNow(state, index){
 			state.tabIndexNow = index
-		}
+		},
 	},
 	actions:{
 		updateTabIndexNow({commit}, index){

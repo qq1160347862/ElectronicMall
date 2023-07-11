@@ -92,7 +92,7 @@
 				type="primary" 
 				size="mini"
 				shape="circle"
-				@click="test"
+				@click="submitOrder"
 				></u-button>
 			</view>
 			<view class="confirm-order-btn" v-show="addressIsEmpty">
@@ -101,7 +101,7 @@
 				type="primary" 
 				size="mini"
 				shape="circle"
-				@click="test"
+				@click="submitOrder"
 				></u-button>
 			</view>
 		</view>
@@ -184,16 +184,56 @@
 			calPrice(price){
 				return Number(price.toString().match(/^\d+(?:\.\d{0,1})?/))
 			},
-			test(){
+			timeFormat(){
+				//原型方法设置
+				Date.prototype.Format = function (fmt) {
+				    var o = {
+				        "M+": this.getMonth() + 1, //月份 
+				        "d+": this.getDate(), //日 
+				        "H+": this.getHours(), //小时 
+				        "m+": this.getMinutes(), //分 
+				        "s+": this.getSeconds(), //秒 
+				        "q+": Math.floor((this.getMonth() + 3) / 3), //季度 
+				        "S": this.getMilliseconds() //毫秒 
+				    };
+				    if (/(y+)/.test(fmt)) fmt = fmt.replace(RegExp.$1, (this.getFullYear() + "").substr(4 - RegExp.$1.length));
+				    for (var k in o)
+				    if (new RegExp("(" + k + ")").test(fmt)) fmt = fmt.replace(RegExp.$1, (RegExp.$1.length == 1) ? (o[k]) : (("00" + o[k]).substr(("" + o[k]).length)));
+				    return fmt;
+				}
+				return new Date().Format("yyyy-MM-dd HH:mm:ss")
+				
+			},
+			submitOrder(){
 				if(!this.addressIsEmpty){
-					console.log(this.addressIsEmpty);
-					console.log(this.notes);
+					let orderObj = {
+						orderId:'9',//订单号
+						orderStatus:'待付款',
+						totalPrice:this.totalPrice,
+						freight:this.freight,
+						notes:this.notes,
+						commodityList:this.commodityList,
+						address:this.address,
+						
+						discountPrice:this.discountPrice,
+						discountedPrice:this.discountedPrice,
+						orderTime : this.timeFormat(),
+						countdown:{},
+						//提交订单的接口
+						//1.订单走后端=> 数据库
+						//2.更新order.js
+						
+					}
+					let orderObjJson = JSON.stringify(orderObj)
+					uni.navigateTo({
+						url:"../order-detail/order-detail?data="+orderObjJson+""
+					})
 				}else{
 					//吐司提示
 					this.$refs.uToast.show({
 						type:'error',
 						title:'错误',
-						message:'请选择送货地址',
+						message:'请选择收货地址',
 						position:'bottom',
 						duration:1000						
 					})
