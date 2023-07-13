@@ -23,7 +23,7 @@ export default{
 						discountPrice:50,
 						discountedPrice:49,
 						orderTIme:'2023-7-11 11:21:45',
-						countdown:24 * 60 * 60 *1000,
+						countdown:{},
 						commodityList:[
 							{
 								name:"腾讯极光盒子5智能网络电视机顶盒6K千兆网络机顶盒4K高分辨率",
@@ -79,7 +79,7 @@ export default{
 						discountPrice:50,
 						discountedPrice:49,
 						orderTIme:'2023-7-11 11:21:45',
-						countdown:24 * 60 * 60 *1000,
+						countdown:{},
 						commodityList:[
 							{
 								name:"腾讯极光盒子5智能网络电视机顶盒6K千兆网络机顶盒4K高分辨率",
@@ -135,7 +135,7 @@ export default{
 						discountPrice:50,
 						discountedPrice:49,
 						orderTIme:'2023-7-11 11:21:45',
-						countdown:24 * 60 * 60 *1000,
+						countdown:{},
 						commodityList:[
 							{
 								name:"腾讯极光盒子5智能网络电视机顶盒6K千兆网络机顶盒4K高分辨率",
@@ -191,7 +191,7 @@ export default{
 						discountPrice:50,
 						discountedPrice:49,
 						orderTIme:'2023-7-11 11:21:45',
-						countdown:24 * 60 * 60 *1000,
+						countdown:{},
 						commodityList:[
 							{
 								name:"腾讯极光盒子5智能网络电视机顶盒6K千兆网络机顶盒4K高分辨率",
@@ -252,7 +252,7 @@ export default{
 						discountPrice:50,
 						discountedPrice:49,
 						orderTIme:'2023-7-11 11:21:45',
-						countdown:24 * 60 * 60 *1000,
+						countdown:{},
 						commodityList:[
 							{
 								name:"腾讯极光盒子5智能网络电视机顶盒6K千兆网络机顶盒4K高分辨率",
@@ -313,7 +313,7 @@ export default{
 						discountPrice:50,
 						discountedPrice:49,
 						orderTIme:'2023-7-11 11:21:45',
-						countdown:24 * 60 * 60 *1000,
+						countdown:{},
 						commodityList:[
 							{
 								name:"腾讯极光盒子5智能网络电视机顶盒6K千兆网络机顶盒4K高分辨率",
@@ -374,7 +374,7 @@ export default{
 						discountPrice:50,
 						discountedPrice:49,
 						orderTIme:'2023-7-11 11:21:45',
-						countdown:24 * 60 * 60 *1000,
+						countdown:{},
 						commodityList:[
 							{
 								name:"腾讯极光盒子5智能网络电视机顶盒6K千兆网络机顶盒4K高分辨率",
@@ -435,7 +435,7 @@ export default{
 						discountPrice:50,
 						discountedPrice:49,
 						orderTIme:'2023-7-11 11:21:45',
-						countdown:24 * 60 * 60 *1000,
+						countdown:{},
 						commodityList:[
 							{
 								name:"腾讯极光盒子5智能网络电视机顶盒6K千兆网络机顶盒4K高分辨率",

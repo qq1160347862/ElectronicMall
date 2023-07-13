@@ -6,14 +6,14 @@
 			width="100%"
 			mode="aspectFill"></u-image>
 		</view>
-		<view class="user-info">
+		<view class="user-info" @click="goLogin">
 			<view class="user-avatar">
 				<u-avatar shape="circle"
-				size="50"
-				mp-avatar></u-avatar>
+				:src="userInfo.avatarUrl"
+				size="50"></u-avatar>
 			</view>
 			<view class="user-name">
-				<text>用户名</text>
+				<text>{{userInfo.nickName}}</text>
 			</view>
 		</view>
 		<view class="user-order">
@@ -100,6 +100,8 @@
 				</view>	
 			</view>
 		</view>
+		<!-- 吐司 -->
+		<u-toast ref="uToast"></u-toast>	
 	</view>
 </template>
 
@@ -108,7 +110,8 @@
 	export default {	
 		computed:{
 			...mapState({
-				tabList:state=>state.order.tabList
+				tabList:state=>state.order.tabList,
+				userInfo:state=>state.userInfo
 			})
 		},
 		data() {
@@ -118,6 +121,11 @@
 		},
 		methods: {
 			...mapActions(['updateTabIndexNow']),
+			goLogin(){
+				uni.navigateTo({
+					url:'../login/login'
+				})	
+			},
 			goUserPath(){
 				uni.navigateTo({
 					url:'../user-path/user-path'
@@ -133,6 +141,16 @@
 				uni.navigateTo({
 					url:'../coupon/coupon'
 				})	
+			},
+			showToast(){
+				//成功吐司提示
+				this.$refs.uToast.show({
+					type:'success',
+					title:'成功',
+					message:'登陆成功',
+					position:'bottom',
+					duration:2000
+				})
 			}
 		}
 	}
