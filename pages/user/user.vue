@@ -6,14 +6,24 @@
 			width="100%"
 			mode="aspectFill"></u-image>
 		</view>
-		<view class="user-info" @click="goLogin">
+		<view class="user-info" @click="goUserSetting" v-if="isLogin">
 			<view class="user-avatar">
 				<u-avatar shape="circle"
-				:src="userInfo.avatarUrl"
+				:src="userInfo.avatar_url"
 				size="50"></u-avatar>
 			</view>
 			<view class="user-name">
-				<text>{{userInfo.nickName}}</text>
+				<text>{{userInfo.nickname}}</text>
+			</view>
+		</view>
+		<view class="user-info" @click="goLogin" v-else>
+			<view class="user-avatar">
+				<u-avatar shape="circle"
+				:src="userInfo.avatar_url"
+				size="50"></u-avatar>
+			</view>
+			<view class="user-name">
+				<text>点击登录</text>
 			</view>
 		</view>
 		<view class="user-order">
@@ -27,28 +37,28 @@
 			</view>
 			<view class="user-order-content">
 				<view class="user-order-content-btn" @tap="goUserOrder(1)">
-					<u-badge bgColor="red" max="99" :value="tabList[1].list.length" 
+					<u-badge v-if="isLogin"  bgColor="red" max="99" :value="tabList[1].list.length" 
 					absolute :offset="[3,0]"></u-badge>
 					<u-icon name="shopping-cart" size="32"
 					color="#6c6c6c"></u-icon>
 					待付款
 				</view>
 				<view class="user-order-content-btn"  @tap="goUserOrder(2)">
-					<u-badge bgColor="red" max="99" :value="tabList[2].list.length"
+					<u-badge  v-if="isLogin" bgColor="red" max="99" :value="tabList[2].list.length"
 					absolute :offset="[3,0]"></u-badge>
 					<u-icon name="shopping-cart" size="32"
 					color="#6c6c6c"></u-icon>
 					待发货
 				</view>
 				<view class="user-order-content-btn"  @tap="goUserOrder(3)">
-					<u-badge bgColor="red" max="99" :value="tabList[3].list.length"
+					<u-badge  v-if="isLogin" bgColor="red" max="99" :value="tabList[3].list.length"
 					absolute :offset="[3,0]"></u-badge>
 					<u-icon name="shopping-cart" size="32"
 					color="#6c6c6c"></u-icon>
 					待收获
 				</view>
 				<view class="user-order-content-btn"  @tap="goUserOrder(4)">
-					<u-badge bgColor="red" max="99" :value="tabList[4].list.length"
+					<u-badge  v-if="isLogin" bgColor="red" max="99" :value="tabList[4].list.length"
 					absolute :offset="[3,0]"></u-badge>
 					<u-icon name="shopping-cart" size="32"
 					color="#6c6c6c"></u-icon>
@@ -106,13 +116,15 @@
 </template>
 
 <script>
-	import {mapState, mapActions} from 'vuex'
+	import {mapState, mapActions,mapGetters} from 'vuex'
 	export default {	
 		computed:{
 			...mapState({
 				tabList:state=>state.order.tabList,
-				userInfo:state=>state.userInfo
-			})
+				userInfo:state=>state.userInfo,
+				token:state=>state.token
+			}),
+			...mapGetters(['isLogin'])
 		},
 		data() {
 			return {
@@ -121,6 +133,11 @@
 		},
 		methods: {
 			...mapActions(['updateTabIndexNow']),
+			goUserSetting(){
+				uni.navigateTo({
+					url:'../user-setting/user-setting'
+				})
+			},
 			goLogin(){
 				uni.navigateTo({
 					url:'../login/login'
@@ -142,12 +159,22 @@
 					url:'../coupon/coupon'
 				})	
 			},
-			showToast(){
+			showToast_login(){
 				//成功吐司提示
 				this.$refs.uToast.show({
 					type:'success',
 					title:'成功',
 					message:'登陆成功',
+					position:'bottom',
+					duration:2000
+				})
+			},
+			showToast_logout(){
+				//成功吐司提示
+				this.$refs.uToast.show({
+					type:'success',
+					title:'成功',
+					message:'登出成功',
 					position:'bottom',
 					duration:2000
 				})

@@ -66,7 +66,7 @@
 					// 若要返回上上页面的实例就 -3，以此类推
 					let prePage = pages[pages.length - 2]
 					// 3. 给上一页面实例绑定getValue()方法和参数（注意是$vm）
-					prePage.$vm.showToast()
+					prePage.$vm.showToast_login()
 					// 4. 返回上一页面
 					uni.navigateBack({
 						delta:1
