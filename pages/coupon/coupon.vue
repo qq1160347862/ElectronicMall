@@ -73,25 +73,59 @@
 			</view>
 		</view>
 		
+		<!-- 吐司 -->
+		<u-toast ref="uToast"></u-toast>	
 	</view>
 </template>
 
 <script>
-	import {mapState, mapActions} from 'vuex'
+	import {mapState,mapMutations} from 'vuex'
+	const couponObj = uniCloud.importObject('coupon')
 	export default {
 		computed:{
 			...mapState({
 				tabList:state=>state.coupon.tabList,
 				tabIndexNow:state=>state.coupon.tabIndexNow,
+				openid:state=>state.openId,
+				token:state=>state.token
 			})
+		},
+		onLoad() {
+			if(this.tabList.length > 0){
+				console.log("优惠券列表已存在vuex中,不请求云对象方法")
+			}else{
+				couponObj.get(this.openid,this.token).then(res=>{
+					console.log(res)
+					if(res.code === 200){
+						this.updatetTabList(res.tabList)
+					}else{
+						setTimeout(()=>{
+							uni.navigateTo({
+								url:"/pages/login/login?data="+JSON.stringify({isLogin:false})+"",								
+							})
+						},2500)	
+						this.$refs.uToast.show({
+							type:'error',
+							title:'错误',
+							message:'身份过期，请登陆后重试',
+							position:'bottom',
+							duration:2000
+						})						
+					}
+					
+				}).catch(e=>{
+					console.log(e.errCode)
+					console.log(e.errMsg)
+				})
+			}
 		},
 		data() {
 			return {				
-				
+						
 			}
 		},
 		methods: {
-			...mapActions(['updateTabIndexNow']),
+			...mapMutations(['updatetTabList','updateTabIndexNow']),
 			switchTab(item){
 				this.updateTabIndexNow(item.index)
 				console.log(item);

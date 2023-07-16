@@ -1,0 +1,84 @@
+// 文档教程: https://uniapp.dcloud.net.cn/uniCloud/schema
+{
+  "bsonType": "object",
+  "required": [],
+  "permission": {
+    "read": false,
+    "create": "doc._id == auth.uid || 'ADMIN' in auth.role",
+    "update": false,
+    "delete": false
+  },
+  "properties": {
+    "_id": {
+      "description": "ID，系统自动生成"
+    }
+  },
+  "nickname": {
+    "bsonType": "string",
+    "title": "用户昵称",
+    "trim": "both",
+    "minLength": 2,
+    "maxLength": 17
+  },
+  "tel": {
+    "bsonType": "string",
+    "title": "手机号码",
+    "pattern": "^\\+?[0-9-]{3,20}$",
+    "trim": "both"
+  },
+  "avatar_url": {
+    "bsonType": "array",
+    "title": "用户头像",
+    "defaultValue": "https://thirdwx.qlogo.cn/mmopen/vi_32/POgEwh4mIHO4nibH0KlMECNjjGxQUq24ZEaGT4poC6icRiccVGKSyXwibcPq4BWmiaIGuG1icwxaQX6grC9VemZoJ8rg/132"
+  },
+  "gender": {
+    "bsonType": "int",
+    "title": "性别",
+    "defaultValue": 0,
+    "description": "用户性别：0 未知 1 男性 2 女性",
+    "enum": [
+      {
+        "text": "未知",
+        "value": 0
+      },
+      {
+        "text": "男",
+        "value": 1
+      },
+      {
+        "text": "女",
+        "value": 2
+      }
+    ]
+  },
+  "roles": {
+    "bsonType": "string",
+    "title": "身份",
+    "trim": "both",
+    "enum": [
+      {
+        "text": "管理员",
+        "value": "admin"
+      },
+      {
+        "text": "用户",
+        "value": "user"
+      }
+    ]
+  },
+  "session_key": {
+    "bsonType": "string",
+    "title": "会话ID"
+  },
+  "openid": {
+    "bsonType": "string",
+    "title": "用户唯一标识"
+  },
+  "register_date": {
+    "bsonType": "timestamp",
+    "title": "注册时间",
+    "forceDefaultValue": {
+      "$env": "now"
+    }
+  }
+}

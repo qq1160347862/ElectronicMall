@@ -1,0 +1,67 @@
+// 文档教程: https://uniapp.dcloud.net.cn/uniCloud/schema
+{
+	"bsonType": "object",
+	"required": [],
+	"permission": {
+		"read": false,
+		"create": false,
+		"update": false,
+		"delete": false
+	},
+	"properties": {
+		"_id": {
+			"description": "ID，系统自动生成"
+		},
+		"openid": {
+		  "bsonType": "string",
+		  "title": "用户唯一标识",
+		  "foreignKey": "users.openid"
+		},
+		"name": {
+		  "bsonType": "string",
+		  "title": "优惠券名称",
+		  "trim": "both",
+		  "minLength": 2,
+		  "maxLength": 17
+		},
+		"type": {
+		  "bsonType": "string",
+		  "title": "优惠券类型",
+		  "trim": "both",
+		  "enum": ["discount","rebate"]
+		},
+		"num": {
+		  "bsonType": "double",
+		  "title": "折扣数值",
+		  "defaultValue": 0
+		},
+		"status": {
+		  "bsonType": "string",
+		  "title": "优惠券状态",
+		  "trim": "both",
+		  "enum": ["可使用","已使用","已过期"]
+		},
+		"condition": {
+		  "bsonType": "string",
+		  "title": "优惠券使用条件",
+		  "trim": "both"
+		},
+		"condition_num": {
+		  "bsonType": "int",
+		  "title": "优惠券使用条件",
+		  "defaultValue": 0
+		},
+		"start_date": {
+		  "bsonType": "timestamp",
+		  "title": "优惠券开始时间",
+		  "defaultValue": {
+		    "$env": "now"
+		  }
+		},
+		"duration_time": {
+		  "bsonType": "timestamp",
+		  "title": "优惠券持续时间",
+		  "defaultValue": 0
+		}
+	}
+}

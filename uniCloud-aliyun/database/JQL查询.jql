@@ -9,4 +9,16 @@
 // 详细JQL语法，请参考：https://uniapp.dcloud.net.cn/uniCloud/jql.html
 
 // 下面示例查询uni-id-users表的所有数据
-db.collection('users').get()
+const time = new Date().getTime()
+db.collection('coupons').add({
+	openid: "o7DL05fsqPEI9RRezK3qWysh8jxE",
+	name: "零食折扣券",
+	type: "discount",
+	num: 0.45,
+	status: "已使用",
+	condition: "满100元可用",
+	condition_num: 100,
+	start_date: time,
+	duration_time: 1000 * 60 * 10,
+})
+

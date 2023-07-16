@@ -26,29 +26,31 @@
 			
 			//设置上传文件拦截器
 			uniCloud.addInterceptor('uploadFile',{
-				invoke(param) {
+				async invoke(param) {
 					// param为拦截Api的直接对象参数，即直接上传的内容
-					// 此处返回错误可终止api执行					
+					// 此处返回错误可终止api执行
 					console.log('云上传拦截器启动...');
 					console.log('拦截的api',param);
 					
-					uniCloud.callFunction({
+					
+					
+					let res = await uniCloud.callFunction({
 						name:"tokenInfer",
 						data:{
-							token:param.token
+							token:param.token,
+							openid:param.openid
 						}
-					}).then(res=>{
-						let openId = store.state.openId?store.state.openId:uni.getStorageSync('openId')						
-						//返回的openid
-						if(res.result === openId){
-							console.log("token认证成功");
-							return true
-						}else{
-							console.log("token认证失败");
-							return false
-						}
-						
 					})
+					
+					if(res.result){
+						console.log("token认证成功");
+						return true
+					}else{																							
+						// return false
+						//这里用return false依然会执行文件上传API，所以用抛出错误来跳转到fail()回调
+						throw new Error('token认证失败')
+					}
+					
 									
 				},
 				success(res) {

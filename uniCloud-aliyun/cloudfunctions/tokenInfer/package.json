@@ -1,0 +1,7 @@
+{
+  "name": "tokenInfer",
+  "dependencies": {},
+  "extensions": {
+    "uni-cloud-jql": {}
+  }
+}

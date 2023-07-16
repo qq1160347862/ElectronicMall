@@ -143,21 +143,75 @@
 					url:'../login/login'
 				})	
 			},
-			goUserPath(){
-				uni.navigateTo({
-					url:'../user-path/user-path'
-				})			
+			goUserPath(){				
+				if(this.isLogin){
+					uni.navigateTo({
+						url:'../user-path/user-path'
+					})
+				}else{
+					//失败后跳转至登陆页面重新登陆
+					setTimeout(()=>{
+						uni.navigateTo({
+							url:"/pages/login/login?data="+JSON.stringify({isLogin:false})+"",
+							
+						})
+					},2500)	
+					this.$refs.uToast.show({
+						type:'error',
+						title:'错误',
+						message:'身份过期，请登陆后重试',
+						position:'bottom',
+						duration:2000
+					})
+				}	
 			},
 			goUserOrder(tabIndexNow){
-				this.updateTabIndexNow(tabIndexNow)
-				uni.navigateTo({
-					url:'../user-order/user-order'
-				})	
+				
+				if(this.isLogin){
+					this.updateTabIndexNow(tabIndexNow)
+					uni.navigateTo({
+						url:'../user-order/user-order'
+					})	
+				}else{
+					//失败后跳转至登陆页面重新登陆
+					setTimeout(()=>{
+						uni.navigateTo({
+							url:"/pages/login/login?data="+JSON.stringify({isLogin:false})+"",
+							
+						})
+					},2500)	
+					this.$refs.uToast.show({
+						type:'error',
+						title:'错误',
+						message:'身份过期，请登陆后重试',
+						position:'bottom',
+						duration:2000
+					})
+				}				
+				
 			},
 			goCoupon(){
-				uni.navigateTo({
-					url:'../coupon/coupon'
-				})	
+				if(this.isLogin){
+					uni.navigateTo({
+						url:'../coupon/coupon'
+					})	
+				}else{
+					//失败后跳转至登陆页面重新登陆
+					setTimeout(()=>{
+						uni.navigateTo({
+							url:"/pages/login/login?data="+JSON.stringify({isLogin:false})+"",
+							
+						})
+					},2500)	
+					this.$refs.uToast.show({
+						type:'error',
+						title:'错误',
+						message:'身份过期，请登陆后重试',
+						position:'bottom',
+						duration:2000
+					})
+				}
+				
 			},
 			showToast_login(){
 				//成功吐司提示

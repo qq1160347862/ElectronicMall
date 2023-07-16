@@ -1,0 +1,35 @@
+// 文档教程: https://uniapp.dcloud.net.cn/uniCloud/schema
+{
+	"bsonType": "object",
+	"required": ["created_date"],
+	"permission": {
+		"read": false,
+		"create": false,
+		"update": false,
+		"delete": false
+	},
+	"properties": {
+		"_id": {
+			"description": "ID，系统自动生成"
+		},
+		"role_id": {
+			"bsonType": "string",
+			"title": "角色唯一标识"
+		},
+		"role_name": {
+			"bsonType": "string",
+			"title": "角色名，展示用"
+		},
+		"permission": {
+			"bsonType": "Array",
+			"title": "角色拥有的权限列表"
+		},
+		"created_date": {
+			"bsonType": "Timestamp",
+			"title": "角色创建时间",
+			"forceDefaultValue": {
+				"$env": "now"
+			}
+		}
+	}
+}

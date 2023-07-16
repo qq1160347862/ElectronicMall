@@ -131,72 +131,83 @@
 				this.loadingAnime = true
 				//上传用户头像至云存储空间
 				//得到头像的云地址，传入云函数中以更新用户头像地址
+				let that = this
 				uniCloud.uploadFile({
 					filePath:this.avatar_url,
 					cloudPath:'/userAvatar/' + this.nickname + 'AvatarPic' +Date.now() + '.' + this.avatar_format,
 					cloudPathAsRealPath:true,
 					token:this.token,
-				}).then(res=>{
-					if(res.success){
-						this.avatar_url = res.fileID
-						
-						//调用云函数更新数据库
-						uniCloud.callFunction({
-							name:"updateUserInfo",
-							data:{
-								avatar_url:this.avatar_url,
-								nickname:this.nickname,
-								gender:this.gender,
-								tel:this.tel,
-								openid:this.openId
-							}
-						}).then(res=>{
-							if(res.result.code === 200){
-								//更新本地vuex用户信息
-								this.updateUserInfo({
-									avatar_url:this.avatar_url,
-									nickname:this.nickname,
-									gender:this.gender,
-									tel:this.tel,
-								})
-								
-								this.loadingAnime = false
-								
-								//成功吐司提示
-								this.$refs.uToast.show({
-									type:'success',
-									title:'成功',
-									message:'修改成功',
-									position:'bottom',
-									duration:2000
-								})
-							}else{
-								this.loadingAnime = false
-								
-								//成功吐司提示
-								this.$refs.uToast.show({
-									type:'error',
-									title:'错误',
-									message:'用户信息同步错误，请重试',
-									position:'bottom',
-									duration:2000
-								})
-							}
+					openid:this.openId,
+					success(res) {
+						if(res.success){
+							that.avatar_url = res.fileID
 							
-						})	
-					}else{
-						this.loadingAnime = false
-						
+							//调用云函数更新数据库
+							uniCloud.callFunction({
+								name:"updateUserInfo",
+								data:{
+									avatar_url:that.avatar_url,
+									nickname:that.nickname,
+									gender:that.gender,
+									tel:that.tel,
+									openid:that.openId
+								}
+							}).then(res=>{
+								if(res.result.code === 200){
+									//更新本地vuex用户信息
+									that.updateUserInfo({
+										avatar_url:that.avatar_url,
+										nickname:that.nickname,
+										gender:that.gender,
+										tel:that.tel,
+									})
+									
+									that.loadingAnime = false
+									
+									//成功吐司提示
+									that.$refs.uToast.show({
+										type:'success',
+										title:'成功',
+										message:'修改成功',
+										position:'bottom',
+										duration:2000
+									})
+								}else{
+									that.loadingAnime = false
+									
+									//成功吐司提示
+									that.$refs.uToast.show({
+										type:'error',
+										title:'错误',
+										message:'用户信息同步错误，请重试',
+										position:'bottom',
+										duration:2000
+									})
+								}
+								
+							})	
+						}
+					},
+					fail(err) {
+						//清除当前过期的登陆信息
+						that.logout()
+						that.loadingAnime = false
+						//失败后跳转至登陆页面重新登陆
+						setTimeout(()=>{
+							uni.navigateTo({
+								url:"/pages/login/login?data="+JSON.stringify({isLogin:false})+"",
+								
+							})
+						},2500)						
 						//成功吐司提示
-						this.$refs.uToast.show({
+						that.$refs.uToast.show({
 							type:'error',
 							title:'错误',
-							message:'图片上传错误，请检测网络流通性后重试',
+							message:'身份过期，请登陆后重试',
 							position:'bottom',
 							duration:2000
 						})
 					}
-					
 				})
 										
 				
