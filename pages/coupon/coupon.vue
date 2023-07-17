@@ -17,7 +17,7 @@
 			<view class="coupon-item" 
 			v-for="(couponItem,couponIndex) in tabItem.list" :key="couponIndex"
 			v-if="tabItem.list.length > 0">
-				<view :class="[couponItem.status==='可使用' ? 'coupon-item-left' : 'coupon-item-left-none']">
+				<view :class="[getTimeStatus((couponItem.start_date + couponItem.duration_time),couponItem.status)==='可使用' ? 'coupon-item-left' : 'coupon-item-left-none']">
 					<view class="coupon-item-num">
 						<text style="font-size: 52rpx;font-weight: bold;" v-show="couponItem.type==='discount'">{{couponItem.num * 10}}</text>
 						<text style="font-size: 52rpx;font-weight: bold;" v-show="couponItem.type==='rebate'">{{couponItem.num}}</text>
@@ -31,11 +31,12 @@
 				<view class="coupon-item-right">
 					<view class="coupon-item-name-valid">
 						<text class="coupon-item-name">{{couponItem.name}}</text>
-						<text class="coupon-item-valid">{{couponItem.validStart}}-{{couponItem.validEnd}}</text>
+						<text class="coupon-item-valid">{{getTime(couponItem.start_date)}} 至
+						{{getTime(couponItem.start_date+couponItem.duration_time)}}</text>
 					</view>
 					<view class="coupon-item-btn">
-						<view style="width: 100rpx;margin-right:30rpx" v-show="couponItem.status==='可使用'">
-							<u-button :text="couponItem.status"
+						<view style="width: 100rpx;margin-right:30rpx" v-show="getTimeStatus((couponItem.start_date + couponItem.duration_time),couponItem.status)==='可使用'">
+							<u-button text="可使用"
 							color="#fa4126"
 							plain
 							type="primary" 
@@ -43,9 +44,19 @@
 							shape="circle"
 							></u-button>
 						</view>
-						<view style="width: 100rpx;margin-right:30rpx" v-show="couponItem.status!=='可使用'">
-							<u-button :text="couponItem.status"
-							color="#fa4126"
+						<view style="width: 100rpx;margin-right:30rpx" v-show="getTimeStatus((couponItem.start_date + couponItem.duration_time),couponItem.status)==='已使用'">
+							<u-button text="已使用"
+							color="#9f9f9f"
+							plain
+							type="primary" 
+							size="mini"
+							shape="circle"
+							disabled
+							></u-button>
+						</view>
+						<view style="width: 100rpx;margin-right:30rpx" v-show="getTimeStatus((couponItem.start_date + couponItem.duration_time),couponItem.status)==='已过期'">
+							<u-button text="已过期"
+							color="#9f9f9f"
 							plain
 							type="primary" 
 							size="mini"
@@ -91,33 +102,30 @@
 			})
 		},
 		onLoad() {
-			if(this.tabList.length > 0){
-				console.log("优惠券列表已存在vuex中,不请求云对象方法")
-			}else{
-				couponObj.get(this.openid,this.token).then(res=>{
-					console.log(res)
-					if(res.code === 200){
-						this.updatetTabList(res.tabList)
-					}else{
-						setTimeout(()=>{
-							uni.navigateTo({
-								url:"/pages/login/login?data="+JSON.stringify({isLogin:false})+"",								
-							})
-						},2500)	
-						this.$refs.uToast.show({
-							type:'error',
-							title:'错误',
-							message:'身份过期，请登陆后重试',
-							position:'bottom',
-							duration:2000
-						})						
-					}
-					
-				}).catch(e=>{
-					console.log(e.errCode)
-					console.log(e.errMsg)
-				})
-			}
+			//因为有时间因素，所以必须每次进入页面请求一次数据QAQ，地址的话就不用
+			couponObj.get(this.openid,this.token).then(res=>{
+				console.log(res)
+				if(res.code === 200){
+					this.updatetTabList(res.tabList)
+				}else{
+					setTimeout(()=>{
+						uni.navigateTo({
+							url:"/pages/login/login?data="+JSON.stringify({isLogin:false})+"",								
+						})
+					},2500)	
+					this.$refs.uToast.show({
+						type:'error',
+						title:'错误',
+						message:'身份过期，请登陆后重试',
+						position:'bottom',
+						duration:2000
+					})						
+				}				
+				
+			}).catch(e=>{
+				console.log(e.errCode)
+				console.log(e.errMsg)
+			})
 		},
 		data() {
 			return {				
@@ -129,6 +137,20 @@
 			switchTab(item){
 				this.updateTabIndexNow(item.index)
 				console.log(item);
+			},
+			getTime(timestamp){
+				let time = new Date(timestamp)
+				return `${time.getFullYear()}-${time.getMonth()+1}-${time.getDate()} ${time.getHours()}:${time.getMinutes()}`
+			},
+			getTimeStatus(time,status){
+				if( (time > new Date().getTime())  &&  (status === 0) ){
+					return '可使用'
+				}else if(status === 1){
+					return '已使用'
+				}else if( (time <= new Date().getTime())  &&  (status === 0) ){
+					//可使用但过期
+					return '已过期'
+				}
 			}
 		}
 	}

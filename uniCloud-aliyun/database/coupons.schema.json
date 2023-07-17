@@ -3,10 +3,10 @@
 	"bsonType": "object",
 	"required": [],
 	"permission": {
-		"read": false,
-		"create": false,
-		"update": false,
-		"delete": false
+		"read": true,
+		"create": true,
+		"update": true,
+		"delete": true
 	},
 	"properties": {
 		"_id": {
@@ -36,10 +36,10 @@
 		  "defaultValue": 0
 		},
 		"status": {
-		  "bsonType": "string",
+		  "bsonType": "int",
 		  "title": "优惠券状态",
-		  "trim": "both",
-		  "enum": ["可使用","已使用","已过期"]
+		  "defaultValue": 0,
+		  "enum": [0,1] //0未使用，1使用过
 		},
 		"condition": {
 		  "bsonType": "string",

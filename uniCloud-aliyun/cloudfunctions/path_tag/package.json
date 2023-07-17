@@ -1,0 +1,7 @@
+{
+  "name": "path_tag",
+  "dependencies": {},
+  "extensions": {
+    "uni-cloud-jql": {}
+  }
+}

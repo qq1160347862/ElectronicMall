@@ -1,0 +1,49 @@
+// 文档教程: https://uniapp.dcloud.net.cn/uniCloud/schema
+{
+	"bsonType": "object",
+	"required": [],
+	"permission": {
+		"read": true,
+		"create": true,
+		"update": true,
+		"delete": true
+	},
+	"properties": {
+		"_id": {
+			"description": "ID，系统自动生成"
+		},
+		"openid": {
+		  "bsonType": "string",
+		  "title": "用户唯一标识",
+		  "foreignKey": "users.openid"
+		},
+		"realname": {
+			"bsonType": "string",
+			"title": "真实名字"
+		},
+		"tel": {
+		  "bsonType": "string",
+		  "title": "手机号码",
+		  "pattern": "^\\+?[0-9-]{3,20}$",
+		  "trim": "both"
+		},
+		"area": {
+		  "bsonType": "string",
+		  "title": "区域"
+		},
+		"detail_address": {
+		  "bsonType": "string",
+		  "title": "具体地址",
+		  "trim": "both"
+		},
+		"tagid": {
+		  "bsonType": "string",
+		  "title": "地址标签id",
+		  "foreignKey": "path_tags._id"
+		},
+		"defaulted": {
+		  "bsonType": "bool",
+		  "title": "是否为默认"
+		}
+	}
+}

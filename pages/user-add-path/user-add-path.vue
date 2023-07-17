@@ -47,7 +47,7 @@
 				<view class="user-add-path-tags" @longpress="openDelTagsPopup(index)"
 				v-for="(item, index) in tagList" :key="index">
 					<u-tag :text="item.name"
-					@click="setTag(item.name)"
+					@click="setTag(item.name,item._id)"
 					plain plainFill
 					size="mini" bgColor="#ffd7d7"
 					borderColor="#ffd7d7"
@@ -135,7 +135,9 @@
 
 <script>
 	import CityPicker from "@/components/city-picker/CityPicker.vue"
-	import {mapState, mapActions} from 'vuex'
+	import {mapState, mapActions, mapMutations} from 'vuex'
+	const pathTagObj = uniCloud.importObject('path_tag')
+	const pathObj = uniCloud.importObject('path')
 	export default {
 		//如果是编辑页面，则会接收到url中的data数据
 		onLoad(e) {
@@ -150,11 +152,41 @@
 				this.index = res.index
 				this.isEditStatus = true
 			}
+			//标签列表大于0，无需再次请求数据
+			if(this.tagList.length > 0){
+				console.log('标签列表大于0，无需再次请求数据');
+			}else{
+				pathTagObj.get(this.openid,this.token).then(res=>{
+					console.log(res)
+					if(res.code === 200){
+						this.getTag(res.tagList)
+					}else{
+						setTimeout(()=>{
+							uni.navigateTo({
+								url:"/pages/login/login?data="+JSON.stringify({isLogin:false})+"",								
+							})
+						},2500)	
+						this.$refs.uToast.show({
+							type:'error',
+							title:'错误',
+							message:'身份过期，请登陆后重试',
+							position:'bottom',
+							duration:2000
+						})						
+					}				
+				}).catch(e=>{
+					console.log(e.errCode)
+					console.log(e.errMsg)
+				})
+			}
 						
 		},
 		computed:{
 			...mapState({
-				tagList:state=>state.path.tagList
+				tagList:state=>state.path.tagList,
+				openid:state=>state.openId,
+				token:state=>state.token,
+				list:state=>state.path.list
 			})
 		},
 		data() {
@@ -164,7 +196,10 @@
 					tel:'',
 					area:'',
 					detailAddress:'',
-					tagName:'',				
+					tagid:{
+						_id:'',
+						name:''
+					},				
 					isDefault:false,
 				},
 				tagName:'',	
@@ -184,8 +219,10 @@
 		},
 		methods: {
 			...mapActions(['createPath','updatePath','createTag','deleteTag']),
-			switchDefaultAddress(){
-				console.log(this.pathObj.isDefault);
+			...mapMutations(['getTag']),
+			switchDefaultAddress(e){
+				console.log(e);
+				this.pathObj.isDefault = e
 			},
 			openTagsPopup(){
 				this.isTagsPopup = true
@@ -203,7 +240,7 @@
 			async addTag(){
 				if(this.tagName !== '' && this.tagName !== undefined){
 					
-					let infer = await this.createTag({name:this.tagName})
+					let infer = await this.createTag({name:this.tagName,openid:this.openid,token:this.token})
 					if(infer){
 						this.tagName = ''
 						this.closeTagsPopup()
@@ -236,8 +273,9 @@
 					})
 				}				
 			},
-			setTag(tagName){
-				this.pathObj.tagName = tagName
+			setTag(tagName,tagid){
+				this.pathObj.tagid._id = tagid
+				this.pathObj.tagid.name = tagName
 				//成功吐司提示
 				this.$refs.uToast.show({
 					type:'success',
@@ -247,36 +285,94 @@
 					duration:500
 				})
 			},
-			delTag(){
-				this.deleteTag(this.tagIndex)
-				this.closeDelTagsPopup()
-				//成功吐司提示
-				this.$refs.uToast.show({
-					type:'success',
-					title:'成功',
-					message:'删除成功',
-					position:'bottom',
-					duration:1000
+			async delTag(){				
+				//云端先删除，删除成功后再本地
+				pathTagObj.delete(this.openid,this.token,this.tagList[this.tagIndex]._id).then(res=>{
+					console.log(res);
+					if(res.code === 200){
+						this.deleteTag(this.tagIndex)
+						this.closeDelTagsPopup()
+						//成功吐司提示
+						this.$refs.uToast.show({
+							type:'success',
+							title:'成功',
+							message:'删除成功',
+							position:'bottom',
+							duration:1000
+						})
+					}else{
+						this.closeDelTagsPopup()
+						setTimeout(()=>{
+							uni.navigateTo({
+								url:"/pages/login/login?data="+JSON.stringify({isLogin:false})+"",								
+							})
+						},2500)	
+						this.$refs.uToast.show({
+							type:'error',
+							title:'错误',
+							message:'身份过期，请登陆后重试',
+							position:'bottom',
+							duration:2000
+						})	
+					}
 				})
+				
+				
 			},
-			save(){
+			async save(){
+				let that = this
 				//修改状态
 				if(this.isEditStatus){
-					this.updatePath({
-						index:this.index,
-						item:this.pathObj
-					})
-					//返回上一页
-					uni.navigateBack({
-						delta:1
-					})
+					pathObj.update(this.openid,this.token,this.pathObj).then(res=>{
+						if(res.code === 200){
+							this.updatePath({
+								index:this.index,
+								item:this.pathObj,
+								openid:res.openid,
+								token:res.token
+							})
+							//返回上一页
+							uni.navigateBack({
+								delta:1
+							})
+						}else{							
+							setTimeout(()=>{
+								uni.navigateTo({
+									url:"/pages/login/login?data="+JSON.stringify({isLogin:false})+"",								
+								})
+							},2500)							
+							that.$refs.uToast.show({
+								type:'error',
+								title:'错误',
+								message:'身份过期，请登陆后重试',
+								position:'bottom',
+								duration:2000
+							})	
+						}
+					})					
 				}else{
-					//新增状态
-					this.createPath(this.pathObj)
-					//返回上一页
-					uni.navigateBack({
-						delta:1
-					})
+					pathObj.add(this.openid,this.token,this.pathObj).then(res=>{						
+						if(res.code === 200){	
+							this.createPath(res)
+							//返回上一页
+							uni.navigateBack({
+								delta:1
+							})
+						}else{							
+							setTimeout(()=>{
+								uni.navigateTo({
+									url:"/pages/login/login?data="+JSON.stringify({isLogin:false})+"",								
+								})
+							},2500)							
+							that.$refs.uToast.show({
+								type:'error',
+								title:'错误',
+								message:'身份过期，请登陆后重试',
+								position:'bottom',
+								duration:2000
+							})	
+						}
+					})					
 				}
 				
 			},

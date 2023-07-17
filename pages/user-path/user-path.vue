@@ -14,12 +14,12 @@
 					borderColor="#ffd7d7"
 					color="red"></u-tag>
 				</view>		
-				<view class="user-path-tag" v-else>
-					<u-tag :text="item.tagName" plain plainFill
+				<view class="user-path-tag" v-else-if="item.tagid.name !== null && item.tagid.name!== undefined && item.tagid.name!== ''">
+					<u-tag :text="item.tagid.name" plain plainFill
 					size="mini" bgColor="#ecf5ff"
 					borderColor="#ecf5ff"
 					color="blue"></u-tag>
-				</view>				
+				</view>
 			</view>
 			<view class="user-path-userInfo">
 				<text>{{item.userName}} {{item.tel}}</text>
@@ -52,12 +52,40 @@
 </template>
 
 <script>
-	import {mapState, mapActions} from 'vuex'
+	import {mapState, mapActions, mapMutations} from 'vuex'
+	const pathObj = uniCloud.importObject('path')
 	export default {
 		onLoad(e) {
 			if(e.data){
 				this.chooseToken = JSON.parse(e.data)				
-			}			
+			}	
+			
+			if(this.list.length > 0){
+				console.log('地址存在vuex中，无需请求')
+			}else{
+				pathObj.get(this.openid,this.token).then(res=>{
+					console.log(res)
+					if(res.code === 200){
+						this.getPath(res.list)
+					}else{
+						setTimeout(()=>{
+							uni.navigateTo({
+								url:"/pages/login/login?data="+JSON.stringify({isLogin:false})+"",								
+							})
+						},2500)	
+						this.$refs.uToast.show({
+							type:'error',
+							title:'错误',
+							message:'身份过期，请登陆后重试',
+							position:'bottom',
+							duration:2000
+						})						
+					}				
+				}).catch(e=>{
+					console.log(e.errCode)
+					console.log(e.errMsg)
+				})
+			}
 		},
 		data() {
 			return {
@@ -68,6 +96,7 @@
 		},
 		methods: {
 			...mapActions(['deletePath']),
+			...mapMutations(['getPath']),
 			//跳转至编辑页面，并通过url带参数data
 			goEditPath(index){
 				
@@ -75,7 +104,6 @@
 					index:index,
 					item:this.list[index]
 				})
-				
 				uni.navigateTo({
 					url:'../user-add-path/user-add-path?data='+pathObj+''
 				})
@@ -90,17 +118,39 @@
 				this.delIndex = index
 				this.isDel = true
 			},
-			del(){
-				this.deletePath(this.delIndex)
-				this.isDel = false
-				//删除吐司提示
-				this.$refs.uToast.show({
-					type:'success',
-					title:'成功',
-					message:'删除成功',
-					position:'bottom',
-					duration:1000						
+			async del(){
+				//云端先删除，删除成功后再本地
+				pathObj.delete(this.openid,this.token,this.list[this.delIndex]._id).then(res=>{
+					console.log(res)
+					if(res.code === 200){
+						this.deletePath(this.delIndex)
+						this.isDel = false
+						//删除吐司提示
+						this.$refs.uToast.show({
+							type:'success',
+							title:'成功',
+							message:'删除成功',
+							position:'bottom',
+							duration:1000						
+						})
+					}else{
+						this.isDel = false
+						setTimeout(()=>{
+							uni.navigateTo({
+								url:"/pages/login/login?data="+JSON.stringify({isLogin:false})+"",								
+							})
+						},2500)	
+						this.$refs.uToast.show({
+							type:'error',
+							title:'错误',
+							message:'身份过期，请登陆后重试',
+							position:'bottom',
+							duration:2000
+						})	
+					}
 				})
+				
+				
 			},
 			switchIsDelState(){
 				this.isDel = false
@@ -125,7 +175,9 @@
 		},
 		computed:{
 			...mapState({
-				list:state=>state.path.list
+				list:state=>state.path.list,
+				openid:state=>state.openId,
+				token:state=>state.token
 			})
 		}
 	}
@@ -161,7 +213,7 @@
 	.user-path-two {
 		margin-left: 30rpx;
 		font-weight: bold;
-		font-size: 42rpx;
+		font-size: 28rpx;
 		
 		display: flex;
 		align-items: center;		

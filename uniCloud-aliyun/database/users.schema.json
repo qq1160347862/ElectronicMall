@@ -3,10 +3,10 @@
   "bsonType": "object",
   "required": [],
   "permission": {
-    "read": false,
+    "read": true,
     "create": "doc._id == auth.uid || 'ADMIN' in auth.role",
-    "update": false,
-    "delete": false
+    "update": true,
+    "delete": true
   },
   "properties": {
     "_id": {

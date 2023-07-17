@@ -53,6 +53,12 @@ const store = new Vuex.Store({
 			uni.removeStorageSync('userInfo')
 			uni.removeStorageSync('token')
 			uni.removeStorageSync('openId')
+			
+			state.coupon.tabList = []
+			state.coupon.tabIndexNow = 0
+			state.path.list = []
+			state.path.tagList = []
+			
 		},
 		updateUserInfo(state,obj){
 			state.userInfo = obj

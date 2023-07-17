@@ -9,16 +9,33 @@
 // 详细JQL语法，请参考：https://uniapp.dcloud.net.cn/uniCloud/jql.html
 
 // 下面示例查询uni-id-users表的所有数据
+const dbCmd = db.command
 const time = new Date().getTime()
 db.collection('coupons').add({
 	openid: "o7DL05fsqPEI9RRezK3qWysh8jxE",
-	name: "零食折扣券",
+	name: "不知道是什么的折扣券",
 	type: "discount",
-	num: 0.45,
-	status: "已使用",
-	condition: "满100元可用",
-	condition_num: 100,
+	num: 0.95,
+	status: 0,
+	condition: "满1元可用",
+	condition_num: 1,
 	start_date: time,
-	duration_time: 1000 * 60 * 10,
+	duration_time: 1000 * 60 * 2,
 })
 
+db.collection('path_tags').add({
+	openid: "o7DL05fsqPEI9RRezK3qWysh8jxE",
+	name: "公司",
+})
+db.collection('paths').add({
+	openid:"o7DL05fsqPEI9RRezK3qWysh8jxE",
+	area:'浙江省 杭州市 滨江区',
+	detail_address:'东苑公寓一单元501',
+	tagid:'64b4f71cf08210d515c3a1f4',
+	defaulted:true
+})
+
+db.collection('paths').where({
+	openid:"o7DL05fsqPEI9RRezK3qWysh8jxE",
+	_id:dbCmd.neq("64b545ef2139291cebc7c1be")
+}).get()

@@ -34,14 +34,16 @@ module.exports = {
 			let res = await db.collection('coupons').where({
 				openid:openid
 			}).get()
-						
+			//{"affectedDocs":1,"data":1}
+			let time = new Date().getTime()
 			//处理经数据库返回的信息，方便vuex存储和页面渲染
 			res.data.map(item=>{
-				if(item.status === '可使用'){
+				if( ((item.start_date + item.duration_time) > time)  &&  (item.status === 0) ){										
 					result.tabList[0].list.push(item)
-				}else if(item.status === '已使用'){
+				}else if(item.status === 1){
 					result.tabList[1].list.push(item)
-				}else{
+				}else if( ((item.start_date + item.duration_time) <= time)  &&  (item.status === 0) ){
+					//可使用但过期
 					result.tabList[2].list.push(item)
 				}
 			})
